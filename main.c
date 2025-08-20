@@ -18,7 +18,7 @@
   ((byte) & 0x02 ? '1' : '0'), \
   ((byte) & 0x01 ? '1' : '0') 
 
-#define debug 0
+#define debug 1
 
 
 
@@ -164,10 +164,10 @@ int hide_text_in_image(img_data_t *img_data, txt_data_t *text_data) {
 
     if (debug) {printf("Parts: %u %u %u %u\n", part1, part2, part3, part4);}
 
-    image[i * 4 + 0] = pixel_changer(&image[i * 4 + 0], part1);
-    image[i * 4 + 1] = pixel_changer(&image[i * 4 + 1], part2);
-    image[i * 4 + 2] = pixel_changer(&image[i * 4 + 2], part3);
-    image[i * 4 + 3] = pixel_changer(&image[i * 4 + 3], part4);
+    pixel_changer(&image[i * 4 + 0], part1);
+    pixel_changer(&image[i * 4 + 1], part2);
+    pixel_changer(&image[i * 4 + 2], part3);
+    pixel_changer(&image[i * 4 + 3], part4);
 
     if (debug) {
       printf("Stored image data after hiding text:\n");
@@ -221,6 +221,11 @@ int main(int argc, char *argv[]) {
     hide_text_in_image(initial_image_data, text_data);
 
     encodeTwoSteps("encoded_image.png", (unsigned char *)initial_image_data->data, initial_image_data->width, initial_image_data->height);
+    
+    free(initial_image_data);
+    free(text_data->data);
+    free(text_data);
+
 
   return 0;
 }

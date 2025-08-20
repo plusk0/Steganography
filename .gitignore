@@ -1,0 +1,5 @@
+venv/
+test_files/
+examples/
+.vscode/
+stega_test
