@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "cppdbg",
+      "request": "launch",
+      "name": "Debug stega_test",
+      "program": "${workspaceFolder}/stega_test",
+      "args": ["test.png"],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "build stega_test",
+      "stopAtEntry": true
+    }
+  ]
+}
