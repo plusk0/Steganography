@@ -4,7 +4,7 @@
     {
       "label": "build stega_test",
       "type": "shell",
-      "command": "gcc main.c lodepng.c -o stega_test -lm",
+      "command": "gcc main.c encoder.c lodepng.c -o stega_test -lm",
       "group": "build",
       "problemMatcher": ["$gcc"]
     }
