@@ -4,6 +4,8 @@
         "string": "c",
         "string_view": "c",
         "lodepng.h": "c",
-        "encoder.h": "c"
+        "encoder.h": "c",
+        "cstddef": "c",
+        "decoder.h": "c"
     }
 }

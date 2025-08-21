@@ -4,7 +4,9 @@
 #include <string.h>
 
 #include "lodepng.h"
-#include "encoder.h"
+
+//#include "encoder.h"
+#include "main.h"
 
 #define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"
 #define BYTE_TO_BINARY(byte)  \
@@ -17,7 +19,7 @@
   ((byte) & 0x02 ? '1' : '0'), \
   ((byte) & 0x01 ? '1' : '0') 
 
-#define debug 1
+#define debug 0
 
 img_data_t *decodeTwoSteps(const char* filename) {
   unsigned error;
@@ -119,7 +121,7 @@ txt_data_t *get_text_data(const char *filename, int img_size) {
         return NULL;
     }
 
-    // -> malloc for case whole img is used
+    // -> malloc just in case whole img is used
   char *text = (char *)malloc(img_size  + 1);
   if (text == NULL) {
     free(text_data);
@@ -157,6 +159,7 @@ int hide_text_in_image(img_data_t *img_data, txt_data_t *text_data) {
     if (debug) {printf("Found Text Bytes:"BYTE_TO_BINARY_PATTERN"\n", BYTE_TO_BINARY(text_data->data[i]));}
 
     unsigned char byte = text_data->data[i];
+    printf("%u ", byte);
     unsigned char part1 = (byte >> 6) & 0x03; // bits 7-6
     unsigned char part2 = (byte >> 4) & 0x03; // bits 5-4
     unsigned char part3 = (byte >> 2) & 0x03; // bits 3-2

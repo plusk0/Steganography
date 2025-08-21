@@ -4,7 +4,11 @@
 #include <string.h>
 
 #include "lodepng.h"
-#include "encoder.h"
+
+//#include "encoder.h"
+//#include "decoder.h"
+
+#include "main.h"
 
 
 int main(int argc, char *argv[]) {
@@ -47,11 +51,11 @@ int main(int argc, char *argv[]) {
     //encoder.c houses the image decoder, is reused for decoding
     img_data_t *encoded_image_data = decodeTwoSteps(encoded_image_filename); 
     img_data_t *reference_image_data = decodeTwoSteps(ref_image_filename); 
-    //txt_data_t *text_data = decode_image(initial_image_data, encoded_image_data);
+    txt_data_t *text_data = decode_image(reference_image_data, encoded_image_data);
 
     int diff = *(int *)encoded_image_data->data ^ *(int *)reference_image_data->data;
 
-    printf("Difference detected (yes if not 0): %d text decoding not yet implemented", diff);
+    printf("\nDifference detected (yes if not 0): %d\n", diff);
 
   } else {
     printf("Invalid operation type: '%s' -> use 'e' for encoding and 'd' for decoding", operation);
