@@ -4,9 +4,10 @@
 #include <string.h>
 
 #include "lodepng.h"
-#include "decoder.h"
 
 #include "main.h"
+
+#define debug 0
 
 txt_data_t *decode_image(img_data_t *initial_image_data, img_data_t *encoded_image_data) {
 
@@ -23,7 +24,7 @@ if (decoded_text == NULL) {
 }
 
     unsigned char *text = malloc(initial_image_data->data_size + 1);
-    printf("Expecting max. %u text\n", initial_image_data->data_size);
+    if (debug) {printf("Expecting max. %u text\n", initial_image_data->data_size);}
     
 
 for (int i = 0; i < initial_image_data->data_size; ++i) {
@@ -33,13 +34,14 @@ for (int i = 0; i < initial_image_data->data_size; ++i) {
     unsigned char diff4 = image[i * 4 + 3] - enc_image[i * 4 + 3];
 
     unsigned char diffbyte = (diff1 << 6) ^ (diff2 << 4) ^ (diff3 << 2) ^ diff4;
-
-    //text[i]
     text[i] = diffbyte;
-    printf("%d ", diffbyte);
+    if (debug) {printf("%d ", diffbyte);}
 }
     decoded_text->data = text;
     decoded_text->data_size = strlen(text);
 
-    printf("\nDecoded text: '%s' | With length: '%u'\n", decoded_text->data, decoded_text->data_size);
+    if (debug) {printf("\nDecoded text: '%s' | With length: '%u'\n", decoded_text->data, decoded_text->data_size);}
+
+    return decoded_text;
+    // Caller is responsible for freeing text obj and text data
 }

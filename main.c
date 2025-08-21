@@ -5,11 +5,9 @@
 
 #include "lodepng.h"
 
-//#include "encoder.h"
-//#include "decoder.h"
-
 #include "main.h"
 
+#define debug 0
 
 int main(int argc, char *argv[]) {
 
@@ -53,14 +51,33 @@ int main(int argc, char *argv[]) {
     img_data_t *reference_image_data = decodeTwoSteps(ref_image_filename); 
     txt_data_t *text_data = decode_image(reference_image_data, encoded_image_data);
 
-    int diff = *(int *)encoded_image_data->data ^ *(int *)reference_image_data->data;
+    if (debug) {
+      int diff = *(int *)encoded_image_data->data ^ *(int *)reference_image_data->data;
+      printf("\nDifference detected (yes if not 0): %d\n", diff);
+    }
 
-    printf("\nDifference detected (yes if not 0): %d\n", diff);
+    FILE *fp = fopen("test_files/decoded_text.txt", "w");
+    if (fp == NULL) {
+            printf("Error opening the file for parsing decoded text");
+            free(encoded_image_data->data);     //I'm really just doing this cause I'm a noob and should remember never to forget.
+            free(reference_image_data->data);   //doesn't really matter cause the program is about to close anyways
+            free(encoded_image_data);
+            free(reference_image_data);
+            free(text_data->data);
+            free(text_data);
+            return -1;
+      }
+    if (debug) {  
+    fprintf(fp, "%s", text_data->data);
+    }
+    fclose(fp);
 
   } else {
     printf("Invalid operation type: '%s' -> use 'e' for encoding and 'd' for decoding", operation);
     return -1;
   }
+
+
   printf("\nDone\n");
   return 0;
 }

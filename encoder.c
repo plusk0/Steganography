@@ -5,7 +5,6 @@
 
 #include "lodepng.h"
 
-//#include "encoder.h"
 #include "main.h"
 
 #define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"
@@ -159,7 +158,7 @@ int hide_text_in_image(img_data_t *img_data, txt_data_t *text_data) {
     if (debug) {printf("Found Text Bytes:"BYTE_TO_BINARY_PATTERN"\n", BYTE_TO_BINARY(text_data->data[i]));}
 
     unsigned char byte = text_data->data[i];
-    printf("%u ", byte);
+    if (debug) {printf("%u ", byte);}
     unsigned char part1 = (byte >> 6) & 0x03; // bits 7-6
     unsigned char part2 = (byte >> 4) & 0x03; // bits 5-4
     unsigned char part3 = (byte >> 2) & 0x03; // bits 3-2
